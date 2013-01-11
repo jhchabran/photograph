@@ -33,7 +33,7 @@ Or install it yourself as:
 ## Usage
 
 Photograph can be used either directly through the Photograph::Artist
-class or by its little sinata app. 
+class or by its little sinatra app. 
 
     @artist = Photograph::Artist.new("http://github.com")
     @artist.shoot!
