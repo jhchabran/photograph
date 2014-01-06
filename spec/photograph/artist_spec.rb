@@ -43,6 +43,11 @@ module Photograph
         end
       end
 
+      it 'should locally set capybara default time' do
+        subject.shoot!{ expect(Capybara.default_wait_time).to eq(15) }
+        expect(Capybara.default_wait_time).to eq(2)
+      end
+
       it('should accept a block when shooting') do
         subject.shoot!{|image| image.should respond_to(:path) }
       end
