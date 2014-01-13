@@ -68,15 +68,7 @@ If authentication is required (or any browser action), ``Artist#before`` allows 
 
 ### As a web service
 
-A small Sinatra application is provided. You can launch it with:
-
-    $ bundle exec photograph -h 127.0.0.1 -p 4567
-
-Then it can be used as following:
-
-    GET http://127.0.0.1:4567/shoot?url=rubygems.org
-
-It also supports [cropping, waiting for a dom selector to match](https://github.com/jhchabran/photograph/blob/master/lib/photograph/service.rb).
+As having the web service builtin requires Sinatra and Thin, it had been extracted to [Photograph-Service](https://github.com/jhchabran/photograph-service).
 
 ## Contributing
 
