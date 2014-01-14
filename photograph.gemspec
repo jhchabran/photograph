@@ -22,5 +22,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rspec', '~> 2.14'
   gem.add_development_dependency 'rake'
 
-  gem.post_install_message = 'DEPRECATION: Artist#shoot! cannot be used without a block anymore. Please check your code, thank you.'
+  gem.post_install_message = 'DEPRECATION: Photograph::Artist#new :wait option had been renamed to :sleep. :wait will be ignored in the next version.'
 end
