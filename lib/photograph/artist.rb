@@ -15,7 +15,8 @@ module Photograph
                        :w => 1280,       # width
                        :h => 1024,       # height
 
-                       :wait => 0.5,     # if selector is nil, wait 1 seconds before taking the screenshot
+                       :sleep => 0.5,    # Sleep 0.5 seconds before taking the screenshot
+                       :capybara_wait_time => 15, # Default Capybara wait time
                        :selector => nil  # wait until the selector matches to take the screenshot
                       }
 
@@ -54,8 +55,9 @@ module Photograph
     #
     # Options:
     # * +url+ mandatory, location you want to screenshot
-    # * +wait+ wait amount of seconds before screenshotting. *this is option is ignored if +selector+ is provided.
+    # * +sleep+ sleep amount of seconds before screenshotting. *this is option is ignored if +selector+ is provided.
     # * +selector+ wait until the provided +selector+ matches a dom node before screenshotting. Typically faster than an arbritrary +wait+ amount, used when your page has some dynamically inserted nodes.
+    # * +capybara_wait_time+ time capybara will wait for a a selector to appear before timing out
     # * +x+ top coordinate of the screenshot, default to 0
     # * +y+ left coordinate of the screenshot, default to 0
     # * +w+ width of the screenshot, default to 1280
@@ -63,6 +65,9 @@ module Photograph
     # * +browser+ Capybara instance to use, typically instanciated by +Artist.create_browser+
     def initialize options={}
       raise MissingUrlError.new('missing argument :url') unless options[:url]
+      if options[:wait]
+        $stderr.puts "DEPRECATED: the :wait option had been deprecated and will be ignored in further version, please use :sleep instead."
+      end
 
       @options = DefaultOptions.merge(options)
       @options[:url] = normalize_url(options[:url])
@@ -73,7 +78,7 @@ module Photograph
     def shoot! &block
       raise DeprecationError.new('Using Artist#shoot! without a block had been deprecated') unless block_given?
 
-      Capybara.using_wait_time 15 do
+      Capybara.using_wait_time @options[:capybara_wait_time] do
         begin
           browser.visit @options[:url]
 
@@ -84,7 +89,7 @@ module Photograph
               browser.has_css? @options[:selector]
             end
           else
-            sleep @options[:wait]
+            sleep @options[:sleep]
           end
 
           tempfile = Tempfile.new(['photograph','.png'])

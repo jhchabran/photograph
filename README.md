@@ -66,6 +66,10 @@ If authentication is required (or any browser action), ``Artist#before`` allows 
       send_file image, :type => :png
     end
 
+### RDOC
+
+[Full Documentation](http://rdoc.info/gems/photograph/frames)
+
 ### As a web service
 
 As having the web service builtin requires Sinatra and Thin, it had been extracted to [Photograph-Service](https://github.com/jhchabran/photograph-service).
